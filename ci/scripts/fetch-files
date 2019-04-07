@@ -16,6 +16,8 @@ aws s3 ls --region "${region_name:?missing region_name}" \
 
 aws s3 sync --region "${region_name:?missing region_name}" \
   "s3://${bucket:?missing bucket}/releases/v${version}/"   \
-  files/
+  gh/artifacts
 
-cp cf7-cli-latest/version files/version
+cp cf7-cli-latest/version gh/name
+cp cf7-cli-latest/version gh/tag
+touch gh/notes.md

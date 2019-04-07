@@ -35,6 +35,8 @@ jobs:
       inputs:
         - name: git
         - name: cf7-cli-latest
+      outputs:
+        - name: gh
       run:
         path: ./git/ci/scripts/fetch-files
         args: []
@@ -43,6 +45,12 @@ jobs:
         region_name: us-west-1
         aws_access_key_id:     (( grab meta.aws.access_key ))
         aws_secret_access_key: (( grab meta.aws.secret_key ))
+  - put: github
+    params:
+      name:   gh/name
+      tag:    gh/tag
+      body:   gh/notes.md
+      globs: [gh/artifacts/*]
 
 resources:
 - name: git
@@ -58,3 +66,10 @@ resources:
     bucket: v7-cf-cli-releases
     region_name: us-west-1
     regexp: releases/v(.*)/cf7-cli_(.*)_x86-64.tgz
+
+- name: github
+  type: github-release
+  source:
+    user:         (( grab meta.github.owner ))
+    repository:   (( grab meta.github.repo ))
+    access_token: (( grab meta.github.access_token ))
