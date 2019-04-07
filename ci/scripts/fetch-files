@@ -18,4 +18,4 @@ aws s3 sync --region "${region_name:?missing region_name}" \
   "s3://${bucket:?missing bucket}/releases/v${version}/"   \
   files/
 
-exit 1
+cp cf7-cli-latest/version files/version
