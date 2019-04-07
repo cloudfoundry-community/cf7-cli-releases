@@ -17,6 +17,7 @@ jobs:
   plan:
   - get: git
   - get: cf7-cli-latest
+    params: {skip_download: "true"}
   - task: fetch-files
     config:
       platform: linux
