@@ -20,4 +20,4 @@ aws s3 sync --region "${region_name:?missing region_name}" \
 
 cp cf7-cli-latest/version gh/name
 cp cf7-cli-latest/version gh/tag
-touch gh/notes.md
+echo "Latest and greatest" > gh/notes.md
