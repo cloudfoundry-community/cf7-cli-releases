@@ -1,12 +1,45 @@
 meta:
   pipeline: cf7-cli-releases
+  image:
+    name: starkandwayne/concourse
+    tag: latest
+
+  github:
+    uri:          (( concat "git@github.com:" meta.github.owner "/" meta.github.repo ))
+    owner:        (( param "Please specify the name of the user / organization that owns the Github repository" ))
+    repo:         (( param "Please specify the name of the Github repository" ))
+    branch:       master
+    private_key:  (( param "Please generate an SSH Deployment Key for this repo and specify it here" ))
+    access_token: (( param "Please generate a Personal Access Token to be used for creating github releases (do you have a ci-bot?)" ))
 
 jobs:
 - name: fetch
   plan:
+  - get: git
   - get: cf7-cli-latest
+  - task: fetch-files
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: (( grab meta.image.name ))
+          tag:        (( grab meta.image.tag ))
+      inputs:
+        - name: git
+        - name: cf7-cli-latest
+      run:
+        path: ./git/ci/scripts/fetch-files
+        args: []
 
 resources:
+- name: git
+  type: git
+  source:
+    uri:         (( grab meta.github.uri ))
+    branch:      (( grab meta.github.branch ))
+    private_key: (( grab meta.github.private_key ))
+
 - name: cf7-cli-latest
   type: s3
   source:

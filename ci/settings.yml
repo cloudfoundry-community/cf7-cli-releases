@@ -3,3 +3,10 @@ meta:
   # fly -t ohio-cf login -c https://ci2.starkandwayne.com -n cfcommunity
   target:  ohio-cf
   url:     https://ci2.starkandwayne.com
+
+  github:
+    owner:  cloudfoundry-community
+    repo:   (( grab meta.name ))
+    branch: master
+    private_key:  ((github-private-key))
+    access_token: ((github-access-token))
