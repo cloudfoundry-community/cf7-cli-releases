@@ -14,9 +14,11 @@ meta:
 
 jobs:
 - name: fetch
+  public: true
   plan:
   - get: git
   - get: cf7-cli-latest
+    trigger: true
     params: {skip_download: "true"}
   - task: fetch-files
     config:
@@ -32,6 +34,9 @@ jobs:
       run:
         path: ./git/ci/scripts/fetch-files
         args: []
+      params:
+        bucket: v7-cf-cli-releases
+        region_name: us-west-1
 
 resources:
 - name: git
