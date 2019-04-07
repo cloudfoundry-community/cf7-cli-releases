@@ -1,0 +1,15 @@
+meta:
+  pipeline: cf7-cli-releases
+
+jobs:
+- name: fetch
+  plan:
+  - get: cf7-cli-latest
+
+resources:
+- name: cf7-cli-latest
+  type: s3
+  source:
+    bucket: v7-cf-cli-releases
+    region_name: us-west-1
+    regexp: releases/v(.*)/cf7-cli_(.*)_x86-64.tgz
