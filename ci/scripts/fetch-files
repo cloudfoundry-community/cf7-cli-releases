@@ -1,5 +1,8 @@
 #!/bin/bash
 
+apt-get install python-pip -y
+pip install awscli
+
 version=$(cat cf7-cli-latest/version)
 aws s3 ls --region "${region_name:?missing region_name}" \
   "s3://${bucket:?missing bucket}/releases/v${version}/"
