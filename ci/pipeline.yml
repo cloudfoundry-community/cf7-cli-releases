@@ -12,6 +12,10 @@ meta:
     private_key:  (( param "Please generate an SSH Deployment Key for this repo and specify it here" ))
     access_token: (( param "Please generate a Personal Access Token to be used for creating github releases (do you have a ci-bot?)" ))
 
+  aws:
+    access_key: (( param "Please set your AWS Access Key ID for your pipeline S3 Bucket" ))
+    secret_key: (( param "Please set your AWS Secret Key ID for your pipeline S3 Bucket" ))
+
 jobs:
 - name: fetch
   public: true
@@ -37,6 +41,8 @@ jobs:
       params:
         bucket: v7-cf-cli-releases
         region_name: us-west-1
+        aws_access_key_id:     (( grab meta.aws.access_key ))
+        aws_secret_access_key: (( grab meta.aws.secret_key ))
 
 resources:
 - name: git

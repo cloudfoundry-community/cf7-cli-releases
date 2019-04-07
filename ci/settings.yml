@@ -10,3 +10,7 @@ meta:
     branch: master
     private_key:  ((github-private-key))
     access_token: ((github-access-token))
+
+  aws:
+    access_key: ((aws-cfcommunity-access))
+    secret_key: ((aws-cfcommunity-secret))

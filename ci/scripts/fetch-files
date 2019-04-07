@@ -3,6 +3,13 @@
 apt-get install python-pip -y
 pip install awscli
 
+mkdir -p ~/.aws
+cat > ~/.aws/credentials <<-EOS
+[default]
+aws_access_key_id = ${aws_access_key_id}
+aws_secret_access_key = ${aws_secret_access_key}
+EOS
+
 version=$(cat cf7-cli-latest/version)
 aws s3 ls --region "${region_name:?missing region_name}" \
   "s3://${bucket:?missing bucket}/releases/v${version}/"
